@@ -3,7 +3,7 @@ const ArticleModel = require('../models/articleModel')
 
 const ListPublicArticles = async(req,res)=>{
   try {
-    const articles = await ArticleModel.find({status:'public'});
+    const articles = await ArticleModel.find({status:'public'}).sort({createdAt: -1 }).populate('user','id name');
       res.json({articles})
   } catch (error) {
     return console.log(error);
@@ -14,7 +14,7 @@ const ListPublicArticles = async(req,res)=>{
 const ListSinglePublicArticle = async(req,res)=>{
     try {
     const article = await ArticleModel.findOne({status:'public',
-      _id:req.params.articleId});
+      _id:req.params.articleId}).sort({createdAt: -1 }).populate('user','id name');;
       res.json({article})
   } catch (error) {
     return console.log(error);
@@ -24,7 +24,8 @@ const ListSinglePublicArticle = async(req,res)=>{
 
 const ListArticles = async(req,res)=>{
   try {
-    const articles = await ArticleModel.find({});
+    const articles = await ArticleModel.find({}).sort({createdAt: -1 })
+    .populate('user','name id')
       res.json({articles})
   } catch (error) {
     return console.log(error);
@@ -43,6 +44,11 @@ const ListSingleArticle = async(req,res)=>{
 
 const CreateArticle = async(req,res)=>{
    try {
+    req.body.user = req.user._id;
+
+    console.log(req.body);
+    
+
     const article = await ArticleModel.create(req.body)
      res.json({article})
    } catch (error) {

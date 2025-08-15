@@ -1,25 +1,26 @@
 const express = require('express')
 const router = express.Router();
- const {ListArticles,ListSingleArticle,CreateArticle, UpdateArticle, DeleteArticle,ListPublicArticles,ListSinglePublicArticle} = require('../controllers/articleControllers')
+ const {ListArticles,ListSingleArticle,CreateArticle, UpdateArticle, DeleteArticle,ListPublicArticles,ListSinglePublicArticle} = require('../controllers/articleControllers');
+const { protect } = require('../middleware/authMiddleware');
 
- 
+ //public Routes
 router.get('/public',ListPublicArticles)
 router.get('/public/:articleId',ListSinglePublicArticle)
 
 
-router.get('/',ListArticles)
+router.get('/',protect,ListArticles)
 
  
-router.get('/:articleId',ListSingleArticle)
+router.get('/:articleId',protect,ListSingleArticle)
 
 
  
-router.post('/',CreateArticle)
+router.post('/',protect,CreateArticle)
 
  
-router.put('/:articleId',UpdateArticle)
+router.put('/:articleId',protect,UpdateArticle)
 
  
-router.delete('/:articleId',DeleteArticle)
+router.delete('/:articleId',protect,DeleteArticle)
 
 module.exports = router;
