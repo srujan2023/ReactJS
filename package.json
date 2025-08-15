@@ -6,7 +6,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
-  "author": "SRUJAN Gowda",
+  "author": "Gowda",
   "license": "ISC",
   "description": "",
   "dependencies": {
